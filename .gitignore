@@ -1,0 +1,8 @@
+# Executable file
+otter
+
+# about cmake
+CMakeCache.txt
+CMakeFiles
+Makefile
+cmake_install.cmake
