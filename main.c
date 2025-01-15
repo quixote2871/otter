@@ -4,6 +4,7 @@
 #include "file.h"
 #include "folder.h"
 #include "data.h"
+#define FILE_PATH_MAX 512
 
 void create_and_copy_file(char *source, char *dest) {
     create_file(dest);
@@ -63,11 +64,14 @@ void judge_directory_files(char *source_file, char *input_dir, char *output_dir)
     qsort(output_dir_data->list, output_dir_data->size, sizeof(char *), compare);
 
     // Judge each file's input
+    char input_file[FILE_PATH_MAX], output_file[FILE_PATH_MAX];
     for(int i=0; i<input_dir_data->size; i++) {
-        char *input_file = strdup(input_dir);
+        memset(input_file, 0, sizeof(input_file));
+        strcpy(input_file, input_dir);
         strcat(input_file, input_dir_data->list[i]);
 
-        char *output_file = strdup(output_dir);
+        memset(output_file, 0, sizeof(output_file));
+        strcpy(output_file, output_dir);
         strcat(output_file, output_dir_data->list[i]);
 
         enum Result result = judge(source_file, input_file, output_file);
@@ -75,9 +79,6 @@ void judge_directory_files(char *source_file, char *input_dir, char *output_dir)
             ac_cnt += 1;
         else
             wa_cnt += 1;
-
-        free(input_file);
-        free(output_file);
     }
 
     free(input_dir_data);
